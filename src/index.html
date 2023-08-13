@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<style>
+  :root {
+    --max-width: 1440px;
+    --main-dark: rgba(130, 0, 36, 1);
+    --main-brown: rgba(170, 128, 102, 1);
+    --background: rgba(242, 233, 219, 1);
+  }
+  header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.5s;
+    padding: 20px 70px;
+    background-color: white;
+    border-bottom: 1px;
+  }
+  .menu_main {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+  }
+  .menu_main a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+    color: var(--main-dark);
+    border: 5px solid transparent;
+  }
+  .menu_main a:hover,
+  .home-active {
+    border-color: var(--main-dark);
+    /* border-radius: 8px; */
+    transition: background 0.5s;
+  }
+  .menu-icon,
+  .social-icon {
+    height: 25px;
+    width: 60px;
+  }
+  .menu_right {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    background-color: white;
+    border: none;
+  }
+  .first_footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, auto));
+    justify-content: space-between;
+    padding: 20px 70px;
+    background-color: var(--background);
+  }
+  .footer_right {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, auto));
+    column-gap: 100px;
+    max-width: 500px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+  }
+  .col a {
+    color: var(--main-dark);
+  }
+  .social_links {
+    padding: 10px;
+  }
+  .last_right {
+    background-color: var(--main-brown);
+    padding: 20px 70px;
+  }
+</style>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="keywords"
+      content="Cobs bread, bread, Cobs, Cookie, Cake, CupCake"
+    />
+    <title>Cobs Bread</title>
+    <link
+      rel="shortcut icon"
+      href="img/cake-candles-solid.svg"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <img src="/src/img/COBS-logo.svg" alt="CobsBread logo" class="logo" />
+
+      <ul class="menu_main">
+        <li>
+          <a href="#home" class="home-active">
+            <svg class="menu-icon">
+              <use href="/src/img/icon.svg#cookie-bite"></use>
+            </svg>
+            Нүүр хуудас</a
+          >
+        </li>
+        <li>
+          <a href="#home">
+            <svg class="menu-icon">
+              <use href="/src/img/icon.svg#people-group"></use>
+            </svg>
+            Бидний тухай</a
+          >
+        </li>
+        <li>
+          <a href="#home">
+            <svg class="menu-icon">
+              <use href="/src/img/icon.svg#circle-question"></use>
+            </svg>
+            Тусламж</a
+          >
+        </li>
+      </ul>
+      <button class="menu_right">
+        <svg class="menu-icon">
+          <use href="/src/img/icon.svg#basket"></use>
+        </svg>
+        <span class="basket">Сагс</span>
+      </button>
+    </header>
+    <main class="container">
+      <section class="first">
+        <section class="first_right">
+          <img src="img/first.svg" alt="cobsbread main image" />
+          <h6 class="main_title">CELEBRATE FRESH</h6>
+        </section>
+        <section class="recommendation">
+          <h2 class="product_name">ТАЛХ</h2>
+          <img
+            src="https://www.cobsbread.com/wp-content/uploads/2022/12/cobs-product-cape-seed-loaf-583x400-1.png"
+            alt=""
+          />
+          <button class="view_product">Бүтээгдэхүүн үзэх</button>
+          <article class="slider_container">
+            <button class="slide">
+              <svg class="prev">
+                <use href="/src/img/icon.svg#icon-triangle-left"></use>
+              </svg>
+            </button>
+            <button class="slide">
+              <svg class="next">
+                <use href="/src/img/icon.svg#icon-triangle-right"></use>
+              </svg>
+            </button>
+          </article>
+        </section>
+      </section>
+      <section class="second">
+        <article class="text_second">
+          <h2>Baked fresh daily by <br />bakers with passion</h2>
+          <p>
+            At COBS Bread, we celebrate fresh. Whether you’re picking up a
+            scratch- baked loaf of bread for the family or a decadent treat for
+            yourself, you can always be sure that the day you walk into your
+            local bakery is the day we baked it.
+          </p>
+        </article>
+        <img
+          src="https://www.cobsbread.com/wp-content/uploads/2019/10/COBS_FRANCHISE_2019-0369-700x485.jpg"
+          alt="our work"
+        />
+      </section>
+      <section class="third">
+        <img
+          src="https://www.cobsbread.com/wp-content/uploads/2022/12/Brand_700x485-Cinn3-1.jpg"
+          alt=""
+        />
+        <article class="text_third">
+          <h2>
+            No Funny <br />
+            Business
+          </h2>
+          <p>
+            Quality ingredients and scratch baking techniques create that warm,
+            buttery smell and happy feeling when you walk into a COBS Bread
+            bakery. You’ll never have to worry about added preservatives in our
+            bread. It’s as important to us as kneading dough or pre-heating the
+            oven. From bun to crumb, COBS Bread ingredients are as pure as it
+            gets.
+          </p>
+        </article>
+      </section>
+      <section class="four">
+        <article class="text_four">
+          <h2>
+            Finding a Home <br />
+            for Every Bread
+          </h2>
+          <p>
+            Through our End of Day Giving program, our bakeries connect with our
+            larger communities by helping every bread find a home after our
+            doors close. It makes us a real part of the communities in which we
+            operate, provides bread to those who need it, and helps reduce food
+            waste.
+          </p>
+        </article>
+        <img
+          src="https://www.cobsbread.com/wp-content/uploads/2022/12/Brand_700x485-SunFlax3-1.jpg"
+          alt="third"
+        />
+      </section>
+    </main>
+    <footer class="footer">
+      <section class="first_footer">
+        <section class="footer_right">
+          <article class="col">
+            <a href="" class="menu">Нүүр хуудас</a>
+            <a href="" class="menu">Бүтээгдэхүүн</a>
+            <a href="" class="menu">Бидний тухай</a>
+          </article>
+          <article class="col">
+            <a href="" class="menu">Тусламж</a>
+            <a href="" class="menu">Түгээмэл асуултууд</a>
+            <a href="" class="menu">Холбоо барих</a>
+            <a href="" class="menu">Үйлчилгээний нөхцөл</a>
+          </article>
+        </section>
+        <section class="footer_left">
+          <img src="img/logo.svg" alt="footer logo" />
+          <ul class="social_links">
+            <a href="#products"
+              ><img class="social-icon" src="img/facebook-f.svg" alt=""
+            /></a>
+            <a href="#products"
+              ><img class="social-icon" src="img/youtube.svg" alt=""
+            /></a>
+            <a href="#products"
+              ><img class="social-icon" src="img/twitter.svg" alt=""
+            /></a>
+            <a href="#products"
+              ><img class="social-icon" src="img/instagram.svg" alt=""
+            /></a>
+          </ul>
+        </section>
+      </section>
+      <section class="last_right">
+        <span>Copyright 2023. All Rights Reserved </span>
+      </section>
+    </footer>
+  </body>
+</html>
