@@ -11,7 +11,7 @@ class cartItem {
       alt="${this.product.name}"
     />
     <article><span>${this.product.name}</span><span>${this.product.price}</span></article>
-    <span class="count">1</span>
+    <span class="count">${this.product.count}</span>
   </li>`;
   }
   get Render() {
@@ -26,6 +26,8 @@ class Cart extends HTMLElement {
     this.bill = 0;
     // get items from local storage
     const products = JSON.parse(localStorage.getItem("cartProducts"));
+    const bill = JSON.parse(localStorage.getItem("bill"));
+    this.bill = bill;
     if (products) {
       this.products = products;
     }
@@ -34,19 +36,31 @@ class Cart extends HTMLElement {
     // if (this.getAttribute("color") != null) this.#Render(this.getAttribute("color"));
     // else this.#Render();
   }
+  calculateTotalBill() {
+    this.bill = this.products.reduce((total, product) => {
+      return total + product.price * product.count;
+    }, 0);
+  }
   connectedCallback() {
     this.renderCartItems();
   }
-
   renderCartItems() {
     const basketList = this.querySelector(".basket__list");
     if (basketList) {
-      basketList.innerHTML = ""; // Clear existing content
+      basketList.innerHTML = "";
 
       if (this.products.length > 0) {
-        this.products.forEach((product) => {
+        this.products.forEach((product, index) => {
           const item = new cartItem(product);
-          basketList.insertAdjacentHTML("beforeend", item.Render);
+          const itemElement = document.createElement("li");
+          itemElement.innerHTML = item.Render;
+
+          const closeButton = itemElement.querySelector(".close");
+          closeButton.addEventListener("click", () => {
+            this.Remove(index);
+          });
+
+          basketList.appendChild(itemElement);
         });
       } else {
         basketList.innerHTML = `<div style=" text-align:center;"><img src="https://media.istockphoto.com/id/1139666909/vector/shopping-cart-shop-trolley-or-basket-in-the-supermarket.jpg?s=612x612&w=0&k=20&c=_HajO7ifYKxuwzKFf-Fx9lsLKBa_1Rq9vuzGiPq8Q5Q=" alt="empty cart" /><h2>Your cart is empty</h2></div>`;
@@ -54,13 +68,31 @@ class Cart extends HTMLElement {
     }
   }
 
-  // remove all items from cart
-  Remove(id) {
-    this.products = [];
-    // remove from local storage
-    const products = localStorage.getItem("cartProducts");
-    localStorage.removeItem("products");
-    this.#Render();
+  // renderCartItems() {
+  //   const basketList = this.querySelector(".basket__list");
+  //   if (basketList) {
+  //     basketList.innerHTML = "";
+
+  //     if (this.products.length > 0) {
+  //       this.products.forEach((product) => {
+  //         const item = new cartItem(product);
+  //         basketList.insertAdjacentHTML("beforeend", item.Render);
+  //       });
+  //     } else {
+  //       basketList.innerHTML = `<div style=" text-align:center;"><img src="https://media.istockphoto.com/id/1139666909/vector/shopping-cart-shop-trolley-or-basket-in-the-supermarket.jpg?s=612x612&w=0&k=20&c=_HajO7ifYKxuwzKFf-Fx9lsLKBa_1Rq9vuzGiPq8Q5Q=" alt="empty cart" /><h2>Your cart is empty</h2></div>`;
+  //     }
+  //   }
+  // }
+
+  Remove(index) {
+    if (index >= 0 && index < this.products.length) {
+      const removedProduct = this.products.splice(index, 1)[0];
+      this.calculateTotalBill();
+      localStorage.setItem("cartProducts", JSON.stringify(this.products));
+      localStorage.setItem("bill", JSON.stringify(this.bill));
+      this.#Render();
+      this.renderCartItems();
+    }
   }
 
   #Render() {
@@ -75,7 +107,7 @@ class Cart extends HTMLElement {
       <ul class="basket__list"></ul>
       <article class="payment">
         <span>Нийт төлбөр</span>
-        <span>15000</span>
+        <span>${this.bill}</span>
       </article>
 
       <button class="accept">Баталгаажуулах</button>
@@ -85,7 +117,6 @@ class Cart extends HTMLElement {
 
   AddToCart(myProduct) {
     console.log(this.products);
-    //document.querySelector(".basket__list").innerHTML = "vfdshnfgvsdh";
     const index = this.products.findIndex(
       (product) => product.name == myProduct.name
     );
@@ -94,53 +125,13 @@ class Cart extends HTMLElement {
     } else {
       this.products.push(myProduct);
     }
-
-    this.#Render();
     localStorage.setItem("cartProducts", JSON.stringify(this.products));
+    this.calculateTotalBill();
+    localStorage.setItem("bill", JSON.stringify(this.bill));
+    this.#Render();
+    this.renderCartItems();
   }
-  //   connectedCallback() {
-  //     // get items from local storage
-  //     document.addEventListener("DOMContentLoaded", () => {
-  //       this.connectedCallbackInternal();
-  //     });
-  //   }
-  //   connectedCallbackInternal() {
-  //     console.log("connectedCallback");
-  //     const products = JSON.parse(localStorage.getItem("cartProducts"));
-  //     const basketList = document.querySelector(".basket__list");
-
-  //     if (products.length > 0) {
-  //       try {
-  //         products.forEach((product) => {
-  //           const item = new cartItem(product);
-  //           const renderedItem = item.Render;
-  //           console.log(renderedItem);
-  //           basketList.insertAdjacentHTML("beforeend", renderedItem);
-  //         });
-  //       } catch (error) {
-  //         alert(error);
-  //       }
-  //     } else if (!products.length) {
-  //       basketList.innerHTML = `<div style="text-align:center;"><img src="https://media.istockphoto.com/id/1139666909/vector/shopping-cart-shop-trolley-or-basket-in-the-supermarket.jpg?s=612x612&w=0&k=20&c=_HajO7ifYKxuwzKFf-Fx9lsLKBa_1Rq9vuzGiPq8Q5Q=" alt="empty cart" /><h2>your cart is empty</h2></div>`;
-  //     }
-
-  //     if (products != null) {
-  //       this.products = products;
-  //       this.#Render();
-  //       console.log(document.querySelector(".basket__list").innerHTML);
-  //     }
-  //     // add event listener before unload
-  //     window.addEventListener("beforeunload", () => {
-  //       // add products to local storage
-  //       console.log("beforeunload");
-  //       // set items to local storage only if count is greater than 0
-  //       const products = this.products.filter((product) => product.count > 0);
-  //       localStorage.setItem("cartProducts", JSON.stringify(products));
-  //     });
-  //   }
   disconnectedCallback() {
-    // add products to local storage
-    // remove eventlistener
     window.removeEventListener("beforeunload", () => {
       // add products to local storage
       console.log("beforeunload");
@@ -151,7 +142,7 @@ class Cart extends HTMLElement {
 document.addEventListener("DOMContentLoaded", () => {
   const cartComponent = document.querySelector("cart-component");
   if (cartComponent) {
-    cartComponent.connectedCallback(); // Manually call connectedCallback
+    cartComponent.connectedCallback();
   }
 });
 

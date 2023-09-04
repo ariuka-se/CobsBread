@@ -55,9 +55,10 @@
 class ProductDetail extends HTMLElement {
   constructor() {
     super();
+    this.count = 1;
     const product = JSON.parse(localStorage.getItem("product"));
     this.innerHTML = `
-    <section class="product_container">
+    <section class="product_container" data-itemid=${product.id}>
     <section class="product_image">
       <img
         src="${product.img}"
@@ -87,9 +88,9 @@ class ProductDetail extends HTMLElement {
           <h6>Үнэ</h6>
           <h4> ${product.price}</h4>
           <article class="count_button">
-            <button>-</button>
-            <span>1</span>
-            <button>+</button>
+            <button class="minus">-</button>
+            <span class="count-span">${this.count}</span>
+            <button class="plus">+</button>
         </article>
         <button class="basket_button">Сагслах</button>
       </article>
@@ -97,6 +98,34 @@ class ProductDetail extends HTMLElement {
     </section>
   </section>
       `;
+    const plusButton = this.querySelector(".plus");
+    const minusButton = this.querySelector(".minus");
+    plusButton.addEventListener("click", () => {
+      this.increaseCount();
+    });
+
+    minusButton.addEventListener("click", () => {
+      this.decreaseCount();
+    });
+  }
+
+  increaseCount() {
+    this.count++;
+    this.updateCountDisplay();
+  }
+
+  decreaseCount() {
+    if (this.count > 1) {
+      this.count--;
+      this.updateCountDisplay();
+    }
+  }
+
+  updateCountDisplay() {
+    const countDisplay = this.querySelector(".count-span");
+    if (countDisplay) {
+      countDisplay.textContent = this.count;
+    }
   }
 
   connectedCallback() {}

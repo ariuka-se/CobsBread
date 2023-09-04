@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.querySelector(".container").addEventListener("click", async (e) => {
   const target = e.target;
-  console.log(target);
   let id,
+    count,
     name = "product",
     product;
   if (target.matches(".menu-icon") || target.tagName === "use") {
@@ -39,15 +39,19 @@ document.querySelector(".container").addEventListener("click", async (e) => {
     id = target.getAttribute("data-itemid");
   } else if (target.parentElement.matches(".product_main")) {
     id = target.parentElement.getAttribute("data-itemid");
+  } else if (target.matches(".basket_button")) {
+    id =
+      target.parentElement.parentElement.parentElement.parentElement.getAttribute(
+        "data-itemid"
+      );
+    count = parseInt(document.querySelector(".count-span").textContent);
   }
-  console.log(id);
   if (id) {
     try {
       product = await getOne(
         "https://api.jsonbin.io/v3/b/644653748e4aa6225e8fda93",
         id
       );
-      console.log(product);
       if (name === "product") {
         localStorage.setItem("product", JSON.stringify(product));
         const html = `
@@ -59,15 +63,19 @@ document.querySelector(".container").addEventListener("click", async (e) => {
       alert(error);
     }
   }
-  if (target.matches(".menu-icon") || target.tagName === "use") {
-    //alert("Added to the cart");
-    console.log(product.name);
+  console.log(product);
+  if (
+    target.matches(".menu-icon") ||
+    target.tagName === "use" ||
+    target.matches(".basket_button")
+  ) {
+    alert("Сагсанд амжилттай орлоо");
     const myCart = document.querySelector("cart-component");
     myCart.AddToCart({
       name: product.name,
       img: product.img,
       price: product.price,
-      count: 1,
+      count: count,
     });
   }
 });

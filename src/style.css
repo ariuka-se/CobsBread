@@ -267,6 +267,7 @@ body {
   border-radius: 15px;
   border: 1px solid transparent;
   width: max-content;
+  cursor: pointer;
 }
 .product-container {
   display: grid;
